@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import AddonModal from "./AddonModal";
 import { ContextProvider } from "../AppContext";
 import { useContext } from "react";
@@ -9,6 +9,18 @@ function PizzaCard({ pizza }) {
   const [toppings, setToppings] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const { cartItems, setCartItems } = useContext(ContextProvider);
+
+  useEffect(() => {
+    if (showModal) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "unset";
+    }
+
+    return () => {
+      document.body.style.overflow = "unset";
+    };
+  }, [showModal]);
 
   const addToCart = () => {
     const cartItem = {
@@ -29,6 +41,7 @@ function PizzaCard({ pizza }) {
           pizzaSizes={pizza.size}
           pizzaToppings={pizza.toppings}
           setSize={setSize}
+          toppings={toppings}
           setToppings={setToppings}
           setShowModal={setShowModal}
         />

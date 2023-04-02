@@ -8,7 +8,7 @@ function AddonModal({
   setShowModal,
 }) {
   return (
-    <div className="absolute top-0 left-0 w-full h-screen flex bg-gray-400 bg-opacity-40 items-center justify-center">
+    <div className="fixed top-0 left-0 w-full h-screen flex bg-gray-400 bg-opacity-40 items-center justify-center">
       <div className="flex flex-col bg-secondary p-5 rounded-lg">
         <div className="grid grid-cols-2 bg-secondary">
           <div>
@@ -16,9 +16,10 @@ function AddonModal({
             <div className="flex flex-col">
               {pizzaSizes[0].items.map((size, i) => {
                 return (
-                  <label key={i}>
+                  <label key={i} htmlFor={size.size}>
                     <input
                       onChange={(e) => setSize(e.target.value)}
+                      id={size.size}
                       value={size.size}
                       type="radio"
                       name={size}
@@ -35,11 +36,12 @@ function AddonModal({
               {pizzaToppings[0].items.map((topping, i) => {
                 if (pizzaToppings[0].isRadio) {
                   return (
-                    <label key={i}>
+                    <label key={i} htmlFor={topping.name}>
                       <input
                         onChange={(e) =>
-                          setToppings((prev) => [...prev, topping.name])
+                          setToppings((prev) => [e.target.value])
                         }
+                        id={topping.name}
                         value={topping.name}
                         type="radio"
                         name={topping}
